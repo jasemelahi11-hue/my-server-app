@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پلتفرم تبلیغات کلیکی (CPC)</title>
+    <title>پلتفرم تبلیغات کلیکی (CPC) - کادربندی هوش مصنوعی</title>
     <style>
         :root {
             --primary: #6366f1;
             --primary-hover: #4f46e5;
             --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
             --bg-main: #f8fafc;
             --card-bg: #ffffff;
             --text-main: #0f172a;
             --text-muted: #64748b;
             --border-color: #e2e8f0;
+            --ai-glow: rgba(99, 102, 241, 0.25);
         }
 
         body {
@@ -27,7 +30,7 @@
         }
 
         .wrapper {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
         }
 
@@ -76,14 +79,28 @@
             display: block;
         }
 
-        .card {
+        /* کادربندی پیشرفته و مدرن مجهز به AI */
+        .ai-frame-card {
             background: var(--card-bg);
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border-color);
-            margin-bottom: 20px;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            margin-bottom: 25px;
             position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        /* افکت هاله نوری هوش مصنوعی در گوشه کادر */
+        .ai-frame-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #10b981, #f59e0b);
         }
 
         .card-header-flex {
@@ -91,14 +108,27 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--bg-main);
-            padding-bottom: 12px;
+            padding-bottom: 15px;
             margin-bottom: 20px;
         }
 
         .card-header-flex h2 {
             margin: 0;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-badge-tag {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
         }
 
         .btn-back {
@@ -106,7 +136,7 @@
             border: 1px solid var(--border-color);
             color: var(--text-muted);
             padding: 6px 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 0.8rem;
             font-weight: bold;
@@ -119,7 +149,7 @@
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         label {
@@ -131,76 +161,169 @@
 
         input, textarea, select {
             width: 100%;
-            padding: 10px 14px;
+            padding: 12px 16px;
             box-sizing: border-box;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 0.95rem;
             background-color: #fff;
+            transition: all 0.3s ease;
         }
 
         input[type="file"] {
-            padding: 7px;
+            padding: 8px;
             background: #f8fafc;
         }
 
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--ai-glow);
         }
 
         button.btn-primary {
-            background-color: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-hover));
             color: white;
-            padding: 12px 20px;
+            padding: 14px 20px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 1rem;
             font-weight: bold;
             width: 100%;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+            transition: transform 0.2s;
         }
 
         button.btn-primary:hover {
-            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+            opacity: 0.95;
         }
 
         button.btn-success {
             background-color: var(--success);
             color: white;
-            padding: 10px 15px;
+            padding: 10px 16px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: bold;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
         }
 
         button.btn-success:hover {
             opacity: 0.9;
         }
 
-        .preview-box {
-            border: 2px dashed var(--primary);
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            text-align: center;
+        .preview-container {
+            margin-top: 25px;
             display: none;
         }
 
-        .preview-box img {
-            max-width: 100%;
-            max-height: 150px;
-            border-radius: 6px;
-            margin-bottom: 10px;
+        .preview-title-label {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* کادر مدرن پیش‌نمایش بنر */
+        .ad-modern-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 12px 20px -5px rgba(0, 0, 0, 0.08);
+            max-width: 340px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+
+        .ad-modern-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 25px -5px rgba(99, 102, 241, 0.15);
+            border-color: rgba(99, 102, 241, 0.4);
+        }
+
+        .ad-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 180px;
+            background: #e2e8f0;
+            overflow: hidden;
+        }
+
+        .ad-image-wrapper img {
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+        }
+
+        .ad-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(5px);
+            color: #ffffff;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .ad-content {
+            padding: 18px;
+        }
+
+        .ad-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-main);
+            margin: 0 0 10px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ad-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .ad-rate {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+
+        .ad-cta-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .ad-cta-btn:hover {
+            background: var(--primary-hover);
         }
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
             margin-bottom: 20px;
         }
@@ -208,8 +331,8 @@
         .stat-box {
             background: #f8fafc;
             border: 1px solid var(--border-color);
-            padding: 15px;
-            border-radius: 8px;
+            padding: 18px;
+            border-radius: 12px;
             text-align: center;
         }
 
@@ -221,6 +344,14 @@
             margin-top: 5px;
         }
 
+        .stat-box.fraud span {
+            color: var(--danger);
+        }
+
+        .stat-box.refund span {
+            color: var(--success);
+        }
+
         .analytics-table {
             width: 100%;
             border-collapse: collapse;
@@ -229,7 +360,7 @@
 
         .analytics-table th, .analytics-table td {
             border: 1px solid var(--border-color);
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             font-size: 0.9rem;
         }
@@ -239,10 +370,24 @@
             color: var(--text-main);
         }
 
+        .log-box {
+            background: #0f172a;
+            color: #38bdf8;
+            padding: 14px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            max-height: 130px;
+            overflow-y: auto;
+            text-align: left;
+            direction: ltr;
+            margin-top: 15px;
+        }
+
         .code-box {
             background: #f1f5f9;
-            padding: 12px;
-            border-radius: 6px;
+            padding: 14px;
+            border-radius: 8px;
             font-family: monospace;
             direction: ltr;
             text-align: left;
@@ -257,7 +402,7 @@
 <div class="wrapper">
     <header>
         <h1>پلتفرم تبلیغات کلیکی (CPC)</h1>
-        <p>سیستم مستقل ثبت تبلیغ، بنر و تحلیل پیشرفته پس از کلیک</p>
+        <p>مجهز به کادربندی پیشرفته مدرن، هوش مصنوعی ضد تقلب و استرداد خودکار وجه</p>
     </header>
 
     <div class="nav-tabs">
@@ -267,11 +412,11 @@
         <div class="nav-tab" onclick="switchTab('publisher')">پنل ناشر</div>
     </div>
 
-    <!-- بخش احراز هویت -->
+    <!-- احراز هویت -->
     <div id="auth-section" class="section-view">
-        <div class="card">
+        <div class="ai-frame-card">
             <div class="card-header-flex">
-                <h2>احراز هویت حساب کاربری</h2>
+                <h2>احراز هویت حساب کاربری <span class="ai-badge-tag">AI SECURE</span></h2>
                 <button type="button" class="btn-back" onclick="switchTab('advertiser')">← بازگشت به قبل</button>
             </div>
             <form id="authForm">
@@ -297,15 +442,15 @@
 
     <!-- پنل تبلیغ‌کننده -->
     <div id="advertiser-section" class="section-view active">
-        <div class="card">
+        <div class="ai-frame-card">
             <div class="card-header-flex">
-                <h2>ایجاد و ثبت کمپین جدید</h2>
+                <h2>ایجاد و ثبت کمپین جدید <span class="ai-badge-tag">AI FRAMING</span></h2>
                 <button type="button" class="btn-back" onclick="switchTab('auth')">← بازگشت به قبل</button>
             </div>
             <form id="advForm">
                 <div class="form-group">
                     <label for="adTitle">عنوان کمپین:</label>
-                    <input type="text" id="adTitle" placeholder="مثلاً: تخفیف سرور" required>
+                    <input type="text" id="adTitle" placeholder="مثلاً: تخفیف سرور ابری" required oninput="updatePreviewText()">
                 </div>
                 <div class="form-group">
                     <label for="adBanner">آپلود بنر / تصویر تبلیغ:</label>
@@ -313,82 +458,108 @@
                 </div>
                 <div class="form-group">
                     <label for="adRate">هزینه هر کلیک (دلار):</label>
-                    <input type="number" step="0.01" id="adRate" placeholder="0.50" required>
+                    <input type="number" step="0.01" id="adRate" placeholder="0.50" required oninput="updatePreviewText()">
                 </div>
                 <div class="form-group">
                     <label for="adUrl">لینک مقصد:</label>
                     <input type="url" id="adUrl" placeholder="https://example.com" required>
                 </div>
 
-                <div id="adPreviewBox" class="preview-box">
-                    <p style="margin: 0 0 8px 0; font-weight: bold; color: var(--primary);">پیش‌نمایش تبلیغ:</p>
-                    <img id="previewImg" src="" alt="بنر تبلیغ">
-                    <p id="previewTitle" style="margin: 5px 0; font-weight: bold;"></p>
-                    <p id="previewRate" style="margin: 0; font-size: 0.85rem; color: var(--text-muted);"></p>
+                <!-- پیش‌نمایش مدرن با کادر شیشه‌ای هوش مصنوعی -->
+                <div id="adPreviewContainer" class="preview-container">
+                    <div class="preview-title-label">✨ پیش‌نمایش هوشمند کادر بنر شما:</div>
+                    <div class="ad-modern-card">
+                        <div class="ad-image-wrapper">
+                            <span class="ad-badge">رپرتاژ هوشمند</span>
+                            <img id="previewImg" src="" alt="بنر تبلیغ">
+                        </div>
+                        <div class="ad-content">
+                            <h3 id="previewTitle" class="ad-title">عنوان تبلیغ</h3>
+                            <div class="ad-footer">
+                                <span id="previewRate" class="ad-rate">CPC: $0.00</span>
+                                <button type="button" class="ad-cta-btn">مشاهده سایت</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <br>
 
-                <button type="submit" class="btn-primary">ثبت نهایی کمپین و انتقال به آمار پیشرفته</button>
+                <button type="submit" class="btn-primary" style="margin-top: 15px;">ثبت کمپین با چارچوب هوش مصنوعی</button>
             </form>
         </div>
     </div>
 
-    <!-- صفحه آمار پیشرفته -->
+    <!-- آمار پیشرفته و مانیتورینگ IP -->
     <div id="analytics-section" class="section-view">
-        <div class="card">
+        <div class="ai-frame-card">
             <div class="card-header-flex">
-                <h2>گزارش و تحلیل پیشرفته (پس از کلیک کاربران)</h2>
+                <h2>گزارش و تحلیل پیشرفته <span class="ai-badge-tag">AI ANALYTICS</span></h2>
                 <button type="button" class="btn-back" onclick="switchTab('advertiser')">← بازگشت به قبل</button>
             </div>
+            
             <div class="stats-grid">
-                <div class="stat-box">مجموع کلیک‌های ثبت‌شده <span id="advClicks">0</span></div>
-                <div class="stat-box">نرخ تعامل (CTR) <span id="advCtr">3.1%</span></div>
-                <div class="stat-box">هزینه کل مصرفی <span id="advCost">$0.00</span></div>
+                <div class="stat-box">کلیک‌های معتبر تاییدشده <span id="advClicks">0</span></div>
+                <div class="stat-box fraud">تخلفات مسدودشده <span id="fraudClicks">0</span></div>
+                <div class="stat-box refund">هزینه برگشتی (Refund) <span id="refundAmount">$0.00</span></div>
+                <div class="stat-box">هزینه خالص نهایی <span id="advCost">$0.00</span></div>
             </div>
 
-            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                <div>
-                    <h3 style="margin: 0 0 5px 0; font-size: 0.95rem;">شبیه‌ساز کلیک روی تبلیغ:</h3>
-                    <p style="margin: 0; font-size: 0.85rem; color: var(--text-muted);">با فشردن دکمه روبرو، یک کلیک جدید روی بنر ثبت شده و آمار پیشرفته به‌روز می‌شود.</p>
+            <div style="background: #f8fafc; border: 1px solid var(--border-color); padding: 18px; border-radius: 12px; margin-bottom: 20px;">
+                <h3 style="margin: 0 0 8px 0; font-size: 0.95rem;">شبیه‌ساز هوشمند ترافیک با IPهای مختلف:</h3>
+                <p style="margin: 0 0 12px 0; font-size: 0.85rem; color: var(--text-muted);">یک IP انتخاب کنید. کلیک اول معتبر است؛ کلیک مجدد همان IP در بازه ۲۴ ساعته توسط AI بلافاصله فیلتر و هزینه ریفاند می‌شود.</p>
+                
+                <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <select id="simulatedIpSelect" style="max-width: 220px;">
+                        <option value="192.168.1.50">کاربر ۱ (IP: 192.168.1.50)</option>
+                        <option value="10.0.0.15">کاربر ۲ (IP: 10.0.0.15)</option>
+                        <option value="172.16.0.8">کاربر ۳ (IP: 172.16.0.8)</option>
+                    </select>
+                    <button type="button" class="btn-success" onclick="testClickWithIP()">ثبت کلیک با این IP</button>
+                    <button type="button" class="btn-back" onclick="resetIpDatabase()" style="background:#fff;">ریست حافظه IPها</button>
                 </div>
-                <button type="button" class="btn-success" onclick="simulateClick()">ثبت کلیک جدید روی بنر</button>
             </div>
 
-            <h3 style="margin-top: 20px; font-size: 1rem; color: var(--text-main);">جزئیات کمپین‌های ثبت‌شده</h3>
+            <h3 style="margin-top: 20px; font-size: 1rem; color: var(--text-main);">وضعیت مالی و سلامت کمپین</h3>
             <table class="analytics-table">
                 <thead>
                     <tr>
                         <th>عنوان کمپین</th>
-                        <th>نرخ هر کلیک</th>
-                        <th>تعداد کلیک‌ها</th>
-                        <th>هزینه کل</th>
-                        <th>وضعیت</th>
+                        <th>نرخ کلیک</th>
+                        <th>کلیک معتبر</th>
+                        <th>تقلب مسدود</th>
+                        <th>مبلغ ریفاندشده</th>
+                        <th>هزینه خالص</th>
                     </tr>
                 </thead>
                 <tbody id="analyticsTableBody">
                     <tr>
-                        <td colspan="5" style="color: var(--text-muted);">هنوز هیچ کمپینی ثبت نشده است. ابتدا یک کمپین ایجاد کنید.</td>
+                        <td colspan="6" style="color: var(--text-muted);">هنوز هیچ کمپینی ثبت نشده است.</td>
                     </tr>
                 </tbody>
             </table>
+
+            <h4 style="margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);">گزارش زنده رویدادهای امنیتی (AI Security Log):</h4>
+            <div id="securityLogBox" class="log-box">
+                [AI System] Advanced Modern Framing & IP-Tracking Engine online. Ready...
+            </div>
         </div>
     </div>
 
     <!-- پنل ناشر -->
     <div id="publisher-section" class="section-view">
-        <div class="card">
+        <div class="ai-frame-card">
             <div class="card-header-flex">
-                <h2>پنل ناشر: اسکریپت ویجت</h2>
+                <h2>پنل ناشر: اسکریپت ویجت <span class="ai-badge-tag">WIDGET FRAME</span></h2>
                 <button type="button" class="btn-back" onclick="switchTab('advertiser')">← بازگشت به قبل</button>
             </div>
-            <p>تگ اسکریپت زیر را در وب‌سایت خود قرار دهید تا بنرها نمایش داده شده و آمار درآمد شما ثبت شود:</p>
+            <p>تگ اسکریپت امنیتی زیر را در سایت خود قرار دهید:</p>
             <div class="code-box">
                 &lt;script src="https://jasemelahi11-hue.github.io/my-server-app/widget.js" data-publisher-id="PUB-9821"&gt;&lt;/script&gt;
             </div>
             <div style="margin-top: 20px;">
-                <h3>آمار درآمد ناشر:</h3>
-                <p>مجموع کلیک‌های ارسالی: <strong id="pubClicks">0</strong></p>
-                <p>مجموع درآمد: <strong id="pubEarnings">$0.00</strong></p>
+                <h3>آمار درآمد ناشر (بدون ترافیک تکراری):</h3>
+                <p>مجموع کلیک‌های معتبر: <strong id="pubClicks">0</strong></p>
+                <p>مجموع درآمد تاییدشده: <strong id="pubEarnings">$0.00</strong></p>
             </div>
         </div>
     </div>
@@ -396,9 +567,12 @@
 
 <script>
     let globalClicks = 0;
+    let globalFraudClicks = 0;
     let globalCost = 0.0;
+    let globalRefundAmount = 0.0;
     let campaignsList = [];
     let activeCampaignRate = 0.5;
+    let ipDailyTracker = {};
 
     function switchTab(tabName) {
         document.querySelectorAll('.section-view').forEach(el => el.classList.remove('active'));
@@ -406,7 +580,6 @@
 
         document.getElementById(tabName + '-section').classList.add('active');
         
-        // همگام‌سازی تب فعال در منوی بالا
         const tabsMap = { 'auth': 0, 'advertiser': 1, 'analytics': 2, 'publisher': 3 };
         const tabIdx = tabsMap[tabName];
         if(tabIdx !== undefined) {
@@ -416,19 +589,23 @@
 
     function previewImage(event) {
         const file = event.target.files[0];
-        const titleInput = document.getElementById('adTitle').value;
-        const rateInput = document.getElementById('adRate').value;
-        
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 document.getElementById('previewImg').src = e.target.result;
-                document.getElementById('previewTitle').textContent = titleInput ? titleInput : 'عنوان تبلیغ';
-                document.getElementById('previewRate').textContent = 'هزینه هر کلیک: $' + (rateInput ? rateInput : '0');
-                document.getElementById('adPreviewBox').style.display = 'block';
+                updatePreviewText();
+                document.getElementById('adPreviewContainer').style.display = 'block';
             }
             reader.readAsDataURL(file);
         }
+    }
+
+    function updatePreviewText() {
+        const titleInput = document.getElementById('adTitle').value;
+        const rateInput = document.getElementById('adRate').value;
+
+        document.getElementById('previewTitle').textContent = titleInput ? titleInput : 'عنوان کمپین تبلیغاتی';
+        document.getElementById('previewRate').textContent = 'CPC: $' + (rateInput ? parseFloat(rateInput).toFixed(2) : '0.50');
     }
 
     document.getElementById('authForm').addEventListener('submit', function(e) {
@@ -448,39 +625,88 @@
         activeCampaignRate = parseFloat(document.getElementById('adRate').value) || 0.5;
         
         campaignsList = [{
+            id: 'camp_1',
             title: title,
             rate: activeCampaignRate,
             clicks: 0,
+            fraudCount: 0,
+            refundSum: 0.0,
             cost: 0.0
         }];
 
+        ipDailyTracker = {};
+
         updateAnalyticsUI();
+        appendLog('AI Framing & Anti-Fraud Engine deployed successfully.');
 
-        alert('کمپین با موفقیت ثبت شد. به صفحه آمار پیشرفته هدایت شدید.');
+        alert('کمپین با کادربندی پیشرفته هوش مصنوعی ثبت گردید.');
         this.reset();
-        document.getElementById('adPreviewBox').style.display = 'none';
+        document.getElementById('adPreviewContainer').style.display = 'none';
 
-        // انتقال به صفحه آمار پیشرفته
         switchTab('analytics');
     });
 
-    function simulateClick() {
+    function testClickWithIP() {
         if (campaignsList.length === 0) {
             alert('لطفاً ابتدا یک کمپین تبلیغاتی ثبت کنید.');
             return;
         }
 
-        globalClicks += 1;
-        globalCost += activeCampaignRate;
+        const selectedIp = document.getElementById('simulatedIpSelect').value;
+        const campaignId = campaignsList[0].id;
+        const trackerKey = `${campaignId}_${selectedIp}`;
+        
+        const currentTime = new Date().getTime();
+        const oneDayMs = 24 * 60 * 60 * 1000;
 
-        campaignsList[0].clicks += 1;
-        campaignsList[0].cost += activeCampaignRate;
+        let isFraud = false;
+        let fraudReason = '';
+
+        if (ipDailyTracker[trackerKey] && (currentTime - ipDailyTracker[trackerKey] < oneDayMs)) {
+            isFraud = true;
+            fraudReason = `AI detected duplicate IP [${selectedIp}] within 24h limit.`;
+        }
+
+        if (isFraud) {
+            globalFraudClicks += 1;
+            globalRefundAmount += activeCampaignRate;
+            
+            campaignsList[0].fraudCount += 1;
+            campaignsList[0].refundSum += activeCampaignRate;
+
+            appendLog(`[AI REFUNDED $${activeCampaignRate.toFixed(2)}] ${fraudReason}`);
+            alert(`⚠️ هوش مصنوعی تقلب را تشخیص داد: تکرار IP در بازه روزانه!\nمبلغ $${activeCampaignRate.toFixed(2)} به حساب شما برگشت خورد.`);
+        } else {
+            ipDailyTracker[trackerKey] = currentTime;
+
+            globalClicks += 1;
+            globalCost += activeCampaignRate;
+
+            campaignsList[0].clicks += 1;
+            campaignsList[0].cost += activeCampaignRate;
+            appendLog(`[AI ACCEPTED] Verified unique click from IP: ${selectedIp}`);
+        }
 
         updateAnalyticsUI();
     }
 
+    function resetIpDatabase() {
+        ipDailyTracker = {};
+        appendLog('[AI System] IP tracking database reset.');
+        alert('حافظه آی‌پی‌ها ریست شد.');
+    }
+
+    function appendLog(message) {
+        const logBox = document.getElementById('securityLogBox');
+        const timestamp = new Date().toLocaleTimeString();
+        logBox.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+        logBox.scrollTop = logBox.scrollHeight;
+    }
+
     function updateAnalyticsUI() {
         document.getElementById('advClicks').textContent = globalClicks;
+        document.getElementById('fraudClicks').textContent = globalFraudClicks;
+        document.getElementById('refundAmount').textContent = '$' + globalRefundAmount.toFixed(2);
         document.getElementById('advCost').textContent = '$' + globalCost.toFixed(2);
         document.getElementById('pubClicks').textContent = globalClicks;
         document.getElementById('pubEarnings').textContent = '$' + globalCost.toFixed(2);
@@ -493,8 +719,9 @@
                     <td>${camp.title}</td>
                     <td>$${camp.rate.toFixed(2)}</td>
                     <td>${camp.clicks}</td>
+                    <td style="color: var(--danger); font-weight: bold;">${camp.fraudCount}</td>
+                    <td style="color: var(--success); font-weight: bold;">+$${camp.refundSum.toFixed(2)}</td>
                     <td>$${camp.cost.toFixed(2)}</td>
-                    <td style="color: var(--success); font-weight: bold;">فعال و در حال رصد</td>
                 </tr>
             `;
         });
