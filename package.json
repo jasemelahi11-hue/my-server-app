@@ -3,6 +3,7 @@
     "axios": "^1.18.1",
     "express": "^5.2.1",
     "express-rate-limit": "^8.6.0",
+    "multer": "^2.2.0",
     "node-fetch": "^3.3.2"
   }
 }
