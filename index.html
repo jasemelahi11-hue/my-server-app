@@ -1,36 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ad Platform Dashboard</title>
+    <title>مدیریت آگهی‌ها</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; background: #f4f4f9; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        input, button { display: block; width: 100%; margin-bottom: 10px; padding: 10px; box-sizing: border-box; }
-        button { background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        button:hover { background: #0056b3; }
-        .ad-item { border-bottom: 1px solid #ddd; padding: 10px 0; }
-        .ad-item img { max-width: 100px; display: block; margin-top: 5px; border-radius: 4px; }
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            text-align: right;
+        }
+        .card {
+            background: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .ad-item {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .ad-item img {
+            max-width: 100px;
+            display: block;
+            margin-top: 5px;
+        }
     </style>
 </head>
 <body>
 
     <div class="card">
-        <h2>Create New Ad</h2>
+        <h2>ثبت آگهی جدید</h2>
         <form id="adForm">
-            <input type="text" id="title" placeholder="Ad Title" required>
-            <input type="url" id="targetUrl" placeholder="Target URL (https://example.com)" required>
-            <input type="number" id="budget" placeholder="Budget" required>
-            <input type="number" id="cpc" placeholder="CPC (Cost Per Click)" required>
-            <input type="file" id="banner" accept="image/*" required>
-            <button type="submit">Submit Ad</button>
+            <input type="text" id="title" placeholder="عنوان آگهی" required>
+            <input type="text" id="targetUrl" placeholder="لینک مقصد" required>
+            <input type="number" id="budget" placeholder="بودجه" required>
+            <input type="number" id="cpc" placeholder="هزینه هر کلیک (CPC)" required>
+            <input type="file" id="banner" accept="image/*">
+            <button type="submit">ثبت آگهی</button>
         </form>
     </div>
 
     <div class="card">
-        <h2>Ads List</h2>
-        <div id="adsContainer">Loading ads...</div>
+        <h2>لیست آگهی‌ها</h2>
+        <div id="adsContainer">در حال بارگذاری آگهی‌ها...</div>
     </div>
 
     <script>
@@ -41,22 +77,22 @@
                 const response = await fetch(API_URL);
                 const ads = await response.json();
                 const container = document.getElementById('adsContainer');
-                
+
                 if (ads.length === 0) {
-                    container.innerHTML = '<p>No ads found.</p>';
+                    container.innerHTML = '<p>هیچ آگهی‌ای یافت نشد.</p>';
                     return;
                 }
 
                 container.innerHTML = ads.map(ad => `
                     <div class="ad-item">
                         <strong>${ad.title}</strong><br>
-                        <a href="${ad.targetUrl}" target="_blank">${ad.targetUrl}</a><br>
-                        <span>Budget: ${ad.budget} | CPC: ${ad.cpc}</span>
+                        <a href="${ad.targetUrl}" target="_blank">مشاهده لینک</a><br>
+                        <span>بودجه: ${ad.budget} | CPC: ${ad.cpc}</span>
                         ${ad.banner ? `<img src="http://localhost:3000/${ad.banner}" alt="Banner">` : ''}
                     </div>
                 `).join('');
             } catch (error) {
-                document.getElementById('adsContainer').innerHTML = '<p>Error loading ads.</p>';
+                document.getElementById('adsContainer').innerHTML = '<p>خطا در بارگذاری آگهی‌ها.</p>';
             }
         }
 
@@ -75,16 +111,17 @@
             });
 
             if (response.ok) {
-                alert('Ad created successfully!');
+                alert('آگهی با موفقیت ایجاد شد!');
                 document.getElementById('adForm').reset();
                 fetchAds();
             } else {
-                alert('Failed to create ad.');
+                alert('خطا در ایجاد آگهی.');
             }
         });
 
         fetchAds();
     </script>
+
 </body>
 </html>
 
